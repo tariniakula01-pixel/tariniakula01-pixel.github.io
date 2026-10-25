@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Healthcare Operations Analytics · Tarini Akula</title>
-<meta name="description" content="Healthcare Operations Analytics: a business analysis and SQL case study by Tarini Akula on appointment operations, requirements, and KPI analysis.">
+<meta name="description" content="Healthcare Operations Analytics: a business analysis and SQL case study by Tarini Akula, with an interactive explorer that maps each business question to the deliverable that answers it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
@@ -38,18 +38,40 @@
     <h2 style="margin-top:36px">The business problem</h2>
     <p>Appointment operations decide how patients actually reach care. When completion, cancellation, and no show patterns are not understood, schedules look full while access quietly fails: some specialties and locations carry the missed appointments, long lead times may push patients to drop out, and provider workload spreads unevenly. This project analyzes healthcare appointment operations to identify patterns in appointment outcomes, scheduling, patient access, wait times, patient satisfaction, and provider workload.</p>
 
-    <h2 style="margin-top:36px">Business questions</h2>
-    <p>1. What is the overall appointment completion, cancellation, and no show performance?<br>
-    2. Which specialties have higher no show rates?<br>
-    3. Which locations have higher cancellation rates?<br>
-    4. Does scheduling lead time relate to missed appointments?<br>
-    5. How do wait times vary across operations?<br>
-    6. How does patient satisfaction vary with wait time?<br>
-    7. How is scheduled workload distributed across providers?<br>
-    8. Which appointment types show different performance patterns?</p>
+    <h2 style="margin-top:36px">How the work flows</h2>
+    <div class="flow" style="margin-top:8px">
+      <div class="flow-step"><strong>Business problem</strong><p>The statement the whole case study answers</p></div>
+      <div class="flow-step"><strong>Stakeholder analysis</strong><p>Who is affected and what each group needs</p></div>
+      <div class="flow-step"><strong>Requirements</strong><p>Documented before any data work begins</p></div>
+      <div class="flow-step"><strong>User stories</strong><p>Needs written from the reader side</p></div>
+      <div class="flow-step"><strong>SQL analysis</strong><p>The query set that answers the questions</p></div>
+      <div class="flow-step"><strong>Dashboard</strong><p>Power BI visualization material</p></div>
+      <div class="flow-step"><strong>Insights</strong><p>Findings and recommendations</p></div>
+    </div>
+
+    <h2 style="margin-top:36px">Explore the requirements</h2>
+    <p>Choose a business question. The panel shows which deliverable answers it and where that deliverable lives in the repository.</p>
+    <div class="hc-layout" style="margin-top:18px">
+      <div class="hc-questions" role="group" aria-label="Business questions">
+        <button class="hc-q" data-hcq="1" aria-pressed="true">1. What is the overall appointment completion, cancellation, and no show performance?</button>
+        <button class="hc-q" data-hcq="2" aria-pressed="false">2. Which specialties have higher no show rates?</button>
+        <button class="hc-q" data-hcq="3" aria-pressed="false">3. Which locations have higher cancellation rates?</button>
+        <button class="hc-q" data-hcq="4" aria-pressed="false">4. Does scheduling lead time relate to missed appointments?</button>
+        <button class="hc-q" data-hcq="5" aria-pressed="false">5. How do wait times vary across operations?</button>
+        <button class="hc-q" data-hcq="6" aria-pressed="false">6. How does patient satisfaction vary with wait time?</button>
+        <button class="hc-q" data-hcq="7" aria-pressed="false">7. How is scheduled workload distributed across providers?</button>
+        <button class="hc-q" data-hcq="8" aria-pressed="false">8. Which appointment types show different performance patterns?</button>
+      </div>
+      <div class="demo" id="hc-panel" aria-live="polite">
+        <h3>Answered by: SQL analysis</h3>
+        <p>The query set computes completion, cancellation, and no show performance across the full appointment population.</p>
+        <p>Repository path: <a href="https://github.com/tariniakula01-pixel/healthcare-operations-analytics/tree/main/sql">sql/healthcare_analysis.sql</a></p>
+        <p style="color:var(--ink-soft)">Every question is also traced in business-analysis/requirements-traceability-matrix.csv, which links each requirement to the analysis that answers it.</p>
+      </div>
+    </div>
 
     <h2 style="margin-top:36px">The analysis deliverables</h2>
-    <p>Each deliverable lives in the repository. Open the folder that interests you.</p>
+    <p>Each deliverable lives in the repository. Open the file that interests you.</p>
     <table>
       <tr><th>Deliverable</th><th>What it holds</th><th>Repository</th></tr>
       <tr><td>Business problem</td><td>The problem statement the whole case study answers</td><td><a href="https://github.com/tariniakula01-pixel/healthcare-operations-analytics/blob/main/business-analysis/business-problem.md">Open file</a></td></tr>
