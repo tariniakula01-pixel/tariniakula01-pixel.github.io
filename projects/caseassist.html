@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CaseAssist · Tarini Akula</title>
-<meta name="description" content="CaseAssist: a Salesforce project by Tarini Akula for AI assisted claims intake and triage, with an honest record of what is built, in progress, and still a concept.">
+<meta name="description" content="CaseAssist: a Salesforce project by Tarini Akula for claims intake and triage, showing the actual implemented data model and Apex services, with a working run of the real classification rules.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
@@ -29,27 +29,85 @@
     <p class="mono eyebrow">Project · Salesforce and AI</p>
     <h1>CaseAssist</h1>
     <span class="status dev">In development</span>
-    <p class="lede" style="margin-top:14px">A Salesforce project for AI assisted claims triage in financial services: structured intake, classification support for the handling team, and human approved escalation. CaseAssist is a personal project built to learn in public. It is not a client deployment, and this page separates what is built from what is still being built and what is still an idea.</p>
+    <p class="lede" style="margin-top:14px">A Salesforce project for claims triage in financial services: structured intake, rule based risk classification that already works, and an Agentforce agent layer still in progress. CaseAssist is a personal project built to learn in public. It is not a client deployment, and this page separates what is implemented from what is simulated and what is still an idea.</p>
     <div class="hero-ctas">
       <a class="btn" href="https://github.com/tariniakula01-pixel/caseassist-salesforce-ai">View the GitHub repository</a>
       <a class="btn ghost" href="../index.html#projects">Back to projects</a>
     </div>
 
     <h2 style="margin-top:36px">The problem</h2>
-    <p>Claims and service requests arrive unstructured: free text, missing fields, unclear urgency. A person reads each one, decides what it is and where it goes, and that manual triage is slow and inconsistent. The cost is not only time. Inconsistent triage means similar cases are handled differently, and urgent cases wait behind routine ones. CaseAssist explores how much of that first pass a Salesforce build with AI assistance can honestly carry, with a person approving anything that matters.</p>
+    <p>Claims and service requests arrive unstructured: free text, missing fields, unclear urgency. A person reads each one, decides what it is and where it goes, and that manual triage is slow and inconsistent. The cost is not only time. Inconsistent triage means similar cases are handled differently, and urgent cases wait behind routine ones. CaseAssist builds the structured foundation first, a real data model and real Apex services, and then explores how much of the first pass AI assistance can honestly carry, with a person approving anything that matters.</p>
 
-    <h2 style="margin-top:36px">Implementation status, as the repository states it</h2>
+    <h2 style="margin-top:36px">The implemented data model</h2>
+    <p>Two custom objects carry the design. A claim always hangs off a policy, and the classifier reads both before it decides anything.</p>
+    <div class="model-grid">
+      <div class="object-card">
+        <h3>Policy__c</h3>
+        <ul>
+          <li>Status__c: the policy state the classifier checks first</li>
+        </ul>
+      </div>
+      <div class="model-arrow" aria-hidden="true">&#8594;</div>
+      <div class="object-card">
+        <h3>Claim__c</h3>
+        <ul>
+          <li>Related_Policy__c: lookup to Policy__c</li>
+          <li>Description__c: what happened, in the claimant words</li>
+          <li>Incident_Date__c: when it happened</li>
+          <li>Estimated_Amount__c: the estimated claim amount</li>
+          <li>Claim_Status__c: starts at New on creation</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top:36px">The implemented Apex services</h2>
     <table>
-      <tr><th>Part of the project</th><th>Status</th><th>Note</th></tr>
-      <tr><td>Salesforce data model</td><td>Working</td><td>Complete, per the repository README</td></tr>
-      <tr><td>Core Apex services</td><td>Working</td><td>Complete, per the repository README</td></tr>
-      <tr><td>Agentforce agent layer</td><td>In development</td><td>In progress; the reason this project is labeled in development</td></tr>
-      <tr><td>Human approved escalation</td><td>Design concept</td><td>Part of the intended design; a person approves before escalation</td></tr>
-      <tr><td>Implementation notes against the design</td><td>In development</td><td>The repository tracks what is implemented versus what is designed</td></tr>
+      <tr><th>Class</th><th>Status</th><th>What it does</th></tr>
+      <tr><td>ClaimCreationService</td><td>Working</td><td>Creates a Claim__c linked to a policy, with Claim_Status__c defaulted to New. Creation does one job only; classification happens in a separate step.</td></tr>
+      <tr><td>ClaimRiskClassifier</td><td>Working</td><td>Assigns a risk level from the policy status and the estimated amount, using the rule set below. Rule based Apex, implemented and covered by a test class.</td></tr>
+      <tr><td>PolicyLookupService</td><td>Working</td><td>Policy lookup support for the intake flow, with its own test class.</td></tr>
+      <tr><td>Agentforce agent layer</td><td>In development</td><td>The agent that would read a case and draft triage suggestions for a handler. In progress per the repository README.</td></tr>
+      <tr><td>Human approved escalation</td><td>Design concept</td><td>A person approves before any escalation. Part of the intended design, not yet built.</td></tr>
     </table>
 
+    <h2 style="margin-top:36px">Run the real classification rules</h2>
+    <p>This demonstration runs the same rules, in the same order, as ClaimRiskClassifier in the repository. It is a web run of implemented Apex logic, not a mockup and not AI. Set a policy status and an estimated amount, then run the classifier.</p>
+    <div class="demo" style="margin-top:18px">
+      <div class="classifier-form">
+        <label>Policy status
+          <select id="ca-policy">
+            <option value="Active" selected>Active</option>
+            <option value="Inactive">Not Active</option>
+          </select>
+        </label>
+        <label>Estimated amount
+          <input type="number" id="ca-amount" min="0" step="any" value="1500">
+        </label>
+        <label class="check"><input type="checkbox" id="ca-blank"> Amount not recorded</label>
+      </div>
+      <button class="btn" id="ca-run" type="button">Run the classifier</button>
+      <div class="result-box" id="ca-result" aria-live="polite"></div>
+    </div>
+    <p style="margin-top:20px">The classifier itself, from the repository:</p>
+    <div class="codeblock">public static String classifyRisk(Claim__c claim, Policy__c relatedPolicy) {
+    if (relatedPolicy.Status__c != 'Active') {
+        return 'High';
+    }
+    if (claim.Estimated_Amount__c == null) {
+        return 'Medium';
+    }
+    if (claim.Estimated_Amount__c >= 10000) {
+        return 'High';
+    }
+    if (claim.Estimated_Amount__c >= 2000) {
+        return 'Medium';
+    }
+    return 'Low';
+}</div>
+    <p style="margin-top:16px">The class comment in the repository says plainly what this is: a rule based first version, where a production version would incorporate an AI scoring model using historical claims data. That future model is a plan, not a feature, and the Agentforce layer above is where the AI exploration actually lives.</p>
+
     <h2 style="margin-top:36px">Guided walkthrough</h2>
-    <p>This walkthrough demonstrates the intended workflow using a sample claim written for this page. It is a simulation of the design. It is not connected to a live Salesforce org, and no real claim data is used.</p>
+    <p>This walkthrough demonstrates the intended workflow using a sample claim written for this page. It is a simulation of the design. It is not connected to a live Salesforce org, and no real claim data is used. Steps 1 and 2 rest on the implemented model and services; step 3 is the layer still in development; step 4 is the design concept.</p>
     <div class="walk" style="margin-top:18px">
       <p class="mono" id="walk-label">Step 1 of 4</p>
       <div class="walk-stage active">
@@ -59,17 +117,17 @@
       </div>
       <div class="walk-stage">
         <h3>2. Intake creates a structured case</h3>
-        <p>The intake layer places the claim on a Salesforce case with the fields the handling team needs, so the record can be routed, reported on, and audited like any other case.</p>
+        <p>ClaimCreationService creates a Claim__c record linked to the policy, with the incident date and estimated amount captured as fields and Claim_Status__c set to New, so the record can be routed, reported on, and audited.</p>
         <p><span class="dot work"></span>Status: data model and core Apex services are complete.</p>
       </div>
       <div class="walk-stage">
-        <h3>3. Triage support classifies and drafts</h3>
-        <p>The agent layer reads the case and proposes a category, an urgency, and a draft next step for the handler. The handler sees the suggestion and the reasoning surface the design calls for, not a silent decision.</p>
-        <p><span class="dot prog"></span>Status: the Agentforce agent layer is in development. This stage is simulated.</p>
+        <h3>3. Classification, then agent assistance</h3>
+        <p>Today, ClaimRiskClassifier assigns the risk level using the rules you can run above. The Agentforce layer in development would then read the case and propose a category, an urgency, and a draft next step for the handler, with the suggestion and its basis visible rather than silent.</p>
+        <p><span class="dot prog"></span>Status: the classifier is implemented Apex. The Agentforce agent layer is in development; its part of this stage is simulated.</p>
       </div>
       <div class="walk-stage">
         <h3>4. A person approves escalation</h3>
-        <p>Nothing escalates on the strength of the suggestion alone. A handler reviews the proposal and approves, adjusts, or rejects it, and the case carries that decision forward.</p>
+        <p>Nothing escalates on the strength of a suggestion alone. A handler reviews the proposal and approves, adjusts, or rejects it, and the case carries that decision forward.</p>
         <p><span class="dot plan"></span>Status: design concept, part of the intended workflow.</p>
       </div>
       <div class="walk-nav">
@@ -79,7 +137,7 @@
     </div>
 
     <h2 style="margin-top:36px">What I am learning from this project</h2>
-    <p>Building the data model first changed every later decision for the better: the agent layer has a stable structure to read from, and its suggestions can be checked against real fields instead of free text. The project is also teaching me the discipline of status honesty. An AI feature that is designed is not a feature that works, and saying so plainly is part of the engineering.</p>
+    <p>Building the data model first changed every later decision for the better: services and any future agent layer read from real fields instead of free text, and every suggestion can be checked against the record. The project is also teaching me the discipline of status honesty. A designed feature is not a working feature, and saying so plainly is part of the engineering.</p>
 
     <h2 style="margin-top:36px">What remains</h2>
     <p>The Agentforce agent layer, the designed escalation workflow, and fuller test coverage as the agent layer matures. Agentforce and Data 360 are technologies I am currently learning, and they are labeled that way everywhere on this site.</p>
