@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>K 12 Student Data Analytics · Tarini Akula</title>
-<meta name="description" content="K 12 Student Data Analytics: a data quality and analytics project by Tarini Akula using SQL, Python, Power BI, and Excel on one documented student population.">
+<meta name="description" content="K 12 Student Data Analytics: a data quality and analytics project by Tarini Akula using SQL, Python, Power BI, and Excel on one documented student population, with an interactive explorer built from the actual project data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
@@ -48,27 +48,23 @@
     6. How did results move across the January to April 2026 testing window?<br>
     7. Can the numbers be trusted? What was changed during cleaning, and do the processed tables pass validation?</p>
 
-    <h2 style="margin-top:36px">The evidence, checked three ways</h2>
-    <p>The headline numbers below were computed independently in Python, in SQL, and with live Excel formulas. Use the switch to read how each tool produced them. The values do not change, because all three agree.</p>
-    <div class="tool-switch" role="group" aria-label="Choose a tool">
-      <button class="chip" data-tool="python" aria-pressed="true">Python</button>
-      <button class="chip" data-tool="sql" aria-pressed="false">SQL</button>
-      <button class="chip" data-tool="excel" aria-pressed="false">Excel</button>
-    </div>
-    <p id="tool-note" style="color:var(--ink-soft)">Computed with pandas in scripts and the analysis notebook. The notebook prints each value beside the chart it supports.</p>
-    <div class="kpi-grid">
-      <div class="kpi"><span class="value">110</span><span class="label">Students in the analysis population, listed as Active</span></div>
-      <div class="kpi"><span class="value">91.84</span><span class="label">Average attendance rate, percent, base 108 students</span></div>
-      <div class="kpi"><span class="value">78.48</span><span class="label">Average assessment score, base 107 students</span></div>
-      <div class="kpi"><span class="value">75.7%</span><span class="label">Students at benchmark, 81 of 107 assessed</span></div>
-    </div>
-
-    <h2 style="margin-top:36px">Results by subject</h2>
-    <p>Share of assessed students recorded as Met, by subject. Each student took one subject, so the bars compare different groups of students and are read with that caution.</p>
-    <div class="bars" style="max-width:640px">
-      <div class="bar-row"><span>ELA</span><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div><span>87.5%</span></div>
-      <div class="bar-row"><span>Math</span><div class="bar-track"><div class="bar-fill" style="width:76.5%"></div></div><span>76.5%</span></div>
-      <div class="bar-row"><span>Science</span><div class="bar-track"><div class="bar-fill copper" style="width:65.9%"></div></div><span>65.9%</span></div>
+    <h2 style="margin-top:36px">Explore the results</h2>
+    <p>This explorer runs on the project actual processed data, computed from the same tables the repository ships. Switch views to recompute the cards, the table, and the benchmark bars. A live Power BI embed is not used: the report project in the repository has not yet been opened in Power BI Desktop or published to a service, so this page presents the verified values directly instead of an embed that does not exist.</p>
+    <div class="demo" style="margin-top:18px">
+      <div class="tool-switch" role="group" aria-label="Choose a view">
+        <button class="chip" data-k12view="all" aria-pressed="true">All students</button>
+        <button class="chip" data-k12view="grade" aria-pressed="false">By grade</button>
+        <button class="chip" data-k12view="program" aria-pressed="false">By program</button>
+        <button class="chip" data-k12view="subject" aria-pressed="false">By subject</button>
+      </div>
+      <div class="kpi-grid" id="k12-tiles"></div>
+      <table>
+        <thead id="k12-head"></thead>
+        <tbody id="k12-body"></tbody>
+      </table>
+      <h3 id="k12-bars-title" style="margin-top:26px">Percent at benchmark by subject</h3>
+      <div class="bars" id="k12-bars" style="max-width:640px"></div>
+      <p id="k12-note" style="color:var(--ink-soft);margin-top:14px"></p>
     </div>
 
     <h2 style="margin-top:36px">Findings I can defend</h2>
@@ -78,11 +74,34 @@
     <p>4. Grade 6 records the weakest benchmark results at 63.6 percent Met, against 81.8 percent in grade 7. Science holds 14 of the 26 Below results.</p>
     <p>5. Discipline incidents are widespread but shallow. 78 of 109 students hold at least one incident, the average is 1.32 per student, and grade 8 records the highest rate at 1.60 per student.</p>
 
+    <h2 style="margin-top:36px">The technical work</h2>
+    <p>The headline KPIs come from a DuckDB SQL suite in the repository sql folder. The first query states its population and rules in its own header, then builds views over the processed tables:</p>
+    <div class="codeblock">-- Query 01: Headline KPI summary
+-- The headline KPIs are calculated on the analysis population of
+-- 110 Active students. percent_met_benchmark uses the project rule
+-- that a score of 70 or above is recorded as Met.
+
+CREATE OR REPLACE VIEW dim_student AS
+    SELECT * FROM read_csv_auto('data/processed/dim_student.csv');
+CREATE OR REPLACE VIEW fact_attendance AS
+    SELECT * FROM read_csv_auto('data/processed/fact_attendance.csv');
+CREATE OR REPLACE VIEW fact_assessment AS
+    SELECT * FROM read_csv_auto('data/processed/fact_assessment.csv');</div>
+    <p style="margin-top:20px">The Power BI model keeps the same definitions as DAX measures in a dedicated measures table, so a number means the same thing in every tool:</p>
+    <div class="codeblock">Total Students = COUNTROWS ( dim_student )
+-- Returns 110 on the current data.
+
+Students With Attendance = COUNTROWS ( fact_attendance )
+-- Returns 108. Two Active students have no attendance row.
+
+Students With Assessment = COUNTROWS ( fact_assessment )
+-- Returns 107. Three Active students have no assessment row.</div>
+
     <h2 style="margin-top:36px">How the work was validated</h2>
     <p>A Python pipeline profiles the source extracts, applies documented cleaning rules, and writes a cleaning log with 37 entries. Fifteen validation checks then run on the processed tables, and all fifteen pass. A reconciliation script compares the pandas and DuckDB results value by value, and the Excel workbook computes the same KPIs with live formulas over the summary table.</p>
 
     <h2 style="margin-top:36px">Power BI status</h2>
-    <p>The repository contains a documented star schema, a catalog of 17 DAX measures with plain English definitions, and a report project in the Power BI project format. The project files were authored as text and have not yet been opened in Power BI Desktop, so this page shows the reconciled values directly instead of embedding a report that has not been published. Opening the project in Power BI Desktop, refreshing it, and checking each page is the documented next step in the repository.</p>
+    <p>The repository contains a documented star schema, a catalog of 17 DAX measures with plain English definitions, and a report project in the Power BI project format. The project files were authored as text and have not yet been opened in Power BI Desktop. Opening the project in Power BI Desktop, refreshing it, and checking each page is the documented next step in the repository.</p>
 
     <h2 style="margin-top:36px">What I would improve next</h2>
     <p>Attendance arrives as a period summary with no dates, so absence timing cannot be studied, and each student holds one assessment in one subject, so growth over time cannot be measured. With daily attendance records and repeated assessments per student, the natural next work is absence pattern analysis inside the year and growth views for the same students over time. Neither is claimed here.</p>
