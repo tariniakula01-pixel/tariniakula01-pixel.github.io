@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K 12 Student Data Analytics · Tarini Akula</title>
+<meta name="description" content="K 12 Student Data Analytics: a data quality and analytics project by Tarini Akula using SQL, Python, Power BI, and Excel on one documented student population.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">Tarini Akula</a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#skills">Skills</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <p class="mono eyebrow">Project · Data Analytics and Business Analysis</p>
+    <h1>K 12 Student Data Analytics</h1>
+    <span class="status progress">In progress</span>
+    <p class="lede" style="margin-top:14px">A data quality and analytics project for one school, grades 5 to 8. The dataset is simulated practice data. It holds no real student information, and every result on this page comes from the project files in the repository.</p>
+    <div class="hero-ctas">
+      <a class="btn" href="https://github.com/tariniakula01-pixel/k12-student-data-analytics">View the GitHub repository</a>
+      <a class="btn ghost" href="../index.html#projects">Back to projects</a>
+    </div>
+
+    <h2 style="margin-top:36px">The problem</h2>
+    <p>School leadership teams read attendance and assessment summaries to decide where to put time and support. Those summaries usually come from several source tables at once. When the tables describe different groups of students, the numbers disagree quietly: an attendance average rests on one set of students while a score average rests on another, and nothing on the page says so.</p>
+    <p>That is exactly what the source data for this project did. The student table held 117 students while the attendance table held 119 rows, including rows for students who do not exist in the student table. This project rebuilds the data around one stated population, documents every change, and keeps the proof that the numbers were checked.</p>
+
+    <h2 style="margin-top:36px">Business questions</h2>
+    <p>1. What are the headline numbers for the year, and what base does each one rest on?<br>
+    2. Which grades and programs show the strongest and weakest attendance, and where is absence below 90 percent most common?<br>
+    3. Where are assessment results strongest and weakest by grade and by subject, and how many students sit below the benchmark?<br>
+    4. Do students with stronger attendance record higher scores in this data?<br>
+    5. How are discipline incidents spread across grades, and are they concentrated in a few students or shared across many?<br>
+    6. How did results move across the January to April 2026 testing window?<br>
+    7. Can the numbers be trusted? What was changed during cleaning, and do the processed tables pass validation?</p>
+
+    <h2 style="margin-top:36px">The evidence, checked three ways</h2>
+    <p>The headline numbers below were computed independently in Python, in SQL, and with live Excel formulas. Use the switch to read how each tool produced them. The values do not change, because all three agree.</p>
+    <div class="tool-switch" role="group" aria-label="Choose a tool">
+      <button class="chip" data-tool="python" aria-pressed="true">Python</button>
+      <button class="chip" data-tool="sql" aria-pressed="false">SQL</button>
+      <button class="chip" data-tool="excel" aria-pressed="false">Excel</button>
+    </div>
+    <p id="tool-note" style="color:var(--ink-soft)">Computed with pandas in scripts and the analysis notebook. The notebook prints each value beside the chart it supports.</p>
+    <div class="kpi-grid">
+      <div class="kpi"><span class="value">110</span><span class="label">Students in the analysis population, listed as Active</span></div>
+      <div class="kpi"><span class="value">91.84</span><span class="label">Average attendance rate, percent, base 108 students</span></div>
+      <div class="kpi"><span class="value">78.48</span><span class="label">Average assessment score, base 107 students</span></div>
+      <div class="kpi"><span class="value">75.7%</span><span class="label">Students at benchmark, 81 of 107 assessed</span></div>
+    </div>
+
+    <h2 style="margin-top:36px">Results by subject</h2>
+    <p>Share of assessed students recorded as Met, by subject. Each student took one subject, so the bars compare different groups of students and are read with that caution.</p>
+    <div class="bars" style="max-width:640px">
+      <div class="bar-row"><span>ELA</span><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div><span>87.5%</span></div>
+      <div class="bar-row"><span>Math</span><div class="bar-track"><div class="bar-fill" style="width:76.5%"></div></div><span>76.5%</span></div>
+      <div class="bar-row"><span>Science</span><div class="bar-track"><div class="bar-fill copper" style="width:65.9%"></div></div><span>65.9%</span></div>
+    </div>
+
+    <h2 style="margin-top:36px">Findings I can defend</h2>
+    <p>1. Attendance and scores barely move together in this data. The correlation is close to zero across 105 students, and the Strong attendance band averages lower than the Needs Monitoring band. The dataset does not show the pattern most readers expect, and it cannot prove a cause in either direction.</p>
+    <p>2. One third of students sit in the chronic absence group. 36 of 108 students with attendance records fall below 90 percent, the project definition, while the median student attends 93.55 percent of days. The average of 91.84 hides this group.</p>
+    <p>3. MTSS Tier 1 students show the weakest attendance and benchmark results: an average attendance rate of 90.08, half the group in chronic absence, an average score of 74.93, and 60.7 percent recorded as Met.</p>
+    <p>4. Grade 6 records the weakest benchmark results at 63.6 percent Met, against 81.8 percent in grade 7. Science holds 14 of the 26 Below results.</p>
+    <p>5. Discipline incidents are widespread but shallow. 78 of 109 students hold at least one incident, the average is 1.32 per student, and grade 8 records the highest rate at 1.60 per student.</p>
+
+    <h2 style="margin-top:36px">How the work was validated</h2>
+    <p>A Python pipeline profiles the source extracts, applies documented cleaning rules, and writes a cleaning log with 37 entries. Fifteen validation checks then run on the processed tables, and all fifteen pass. A reconciliation script compares the pandas and DuckDB results value by value, and the Excel workbook computes the same KPIs with live formulas over the summary table.</p>
+
+    <h2 style="margin-top:36px">Power BI status</h2>
+    <p>The repository contains a documented star schema, a catalog of 17 DAX measures with plain English definitions, and a report project in the Power BI project format. The project files were authored as text and have not yet been opened in Power BI Desktop, so this page shows the reconciled values directly instead of embedding a report that has not been published. Opening the project in Power BI Desktop, refreshing it, and checking each page is the documented next step in the repository.</p>
+
+    <h2 style="margin-top:36px">What I would improve next</h2>
+    <p>Attendance arrives as a period summary with no dates, so absence timing cannot be studied, and each student holds one assessment in one subject, so growth over time cannot be measured. With daily attendance records and repeated assessments per student, the natural next work is absence pattern analysis inside the year and growth views for the same students over time. Neither is claimed here.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Tarini Akula · Baltimore, Maryland</span>
+    <span><a href="../index.html#projects">Projects</a> · <a href="../index.html#contact">Contact</a></span>
+  </div>
+</footer>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>
