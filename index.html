@@ -1,317 +1,648 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tarini Akula · Salesforce, Agentforce, Data Analytics, Business Analysis, AI</title>
-<meta name="description" content="Portfolio of Tarini Akula: Salesforce development and administration, Agentforce and Data 360 exploration, data analytics, business and systems analysis, and AI assisted project work.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Portfolio of Tarini Akula: Salesforce development and administration, data analytics, and business analysis, with working demonstrations built from real project files." />
+    <link rel="icon" href="data:," />
+    <title>Tarini Akula · Salesforce, Data, and Business Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#fdfaf4; --surface:#ffffff; --surface2:#f4eee1; --ink:#16283f; --ink2:#46586c;
+        --navy:#10233d; --navy2:#0b1a2e; --copper:#b26a2e; --copper-soft:#f3e2cf;
+        --teal:#14665c; --teal-soft:#dcefea; --line:#ddd2bd; --gold:#c99a4a;
+        --shadow:0 10px 30px rgba(16,35,61,.10);
+        --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#0b1524; --surface:#12233c; --surface2:#16293f; --ink:#f2ecdf; --ink2:#c3cdd9;
+          --navy:#0e2038; --navy2:#081426; --copper:#d08b47; --copper-soft:#3a2a18;
+          --teal:#3fae9d; --teal-soft:#123a35; --line:#2c435f; --gold:#d9ab5e;
+          --shadow:0 10px 30px rgba(0,0,0,.35);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none !important} }
+      body{margin:0;background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;font-size:17px;line-height:1.65}
+      h1,h2,h3{font-family:"Spectral",Georgia,serif;line-height:1.15;margin:0 0 .5em}
+      h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:700}
+      h2{font-size:clamp(1.55rem,3.4vw,2.3rem);font-weight:600}
+      h3{font-size:1.22rem;font-weight:600}
+      p{margin:0 0 1em}
+      a{color:var(--teal);text-underline-offset:3px}
+      a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--copper);outline-offset:2px;border-radius:4px}
+      .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+      .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+      pre.wrapcode code{white-space:pre-wrap;word-break:break-word}
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html">Tarini Akula</a>
-    <nav class="main-nav" aria-label="Main">
-      <a href="#about">About</a>
-      <a href="#what-i-do">What I Do</a>
-      <a href="#projects">Projects</a>
-      <a href="#salesforce-ai">Salesforce and AI</a>
-      <a href="#skills">Skills</a>
-      <a href="#certifications">Certifications</a>
-      <a href="#approach">Approach</a>
-      <a href="#contact">Contact</a>
+      nav.mainnav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+      nav.mainnav .wrap{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:center;padding-top:12px;padding-bottom:12px}
+      nav.mainnav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;padding:6px 2px}
+      nav.mainnav a:hover{color:var(--copper)}
+      nav.mainnav .brand{font-family:"Spectral",serif;font-size:1.15rem;margin-right:auto}
+
+      section{padding:56px 0;scroll-margin-top:64px}
+      .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--copper);margin-bottom:10px}
+      .eyebrow::after{content:"";display:block;width:44px;height:3px;background:var(--copper);margin-top:8px;border-radius:2px}
+      .muted{color:var(--ink2)}
+      .small{font-size:.92rem}
+
+      .hero{background:var(--navy);color:#f4efe3;padding:52px 34px 0;position:relative}
+      .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px);background-size:22px 22px;pointer-events:none}
+      .heroGrid{position:relative;display:grid;grid-template-columns:1.55fr .85fr;gap:36px;align-items:start}
+      .hero h1{color:#fff}
+      .hero .lede{font-size:1.13rem;color:#dde5ee;max-width:34em}
+      .ctaRow{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 8px}
+      .btn{display:inline-block;border-radius:10px;padding:12px 20px;font-weight:600;text-decoration:none;border:2px solid transparent;cursor:pointer;font-size:1rem;font-family:inherit}
+      .btnCopper{background:var(--copper);color:#fff}
+      .btnCopper:hover{background:#97571f}
+      .btnGhost{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+      .btnGhost:hover{border-color:#fff}
+      .btnTeal{background:var(--teal);color:#fff}
+      .btnTeal:hover{filter:brightness(1.1)}
+      .btnSoft{background:var(--surface2);color:var(--ink);border-color:var(--line)}
+      .photoArea{aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06)}
+      .photoArea img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block}
+      .statBand{position:relative;margin-top:38px;border-top:1px solid rgba(255,255,255,.18);display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+      .statBand .stat{padding:20px 18px 24px;border-left:1px solid rgba(255,255,255,.14)}
+      .statBand .stat:first-child{border-left:none;padding-left:0}
+      .statNum{font-family:"Spectral",serif;font-size:2rem;color:#fff;line-height:1}
+      .statLbl{font-size:.86rem;color:#c9d4e1;margin-top:6px}
+      .heroRule{height:5px;background:linear-gradient(90deg,var(--copper),var(--teal))}
+
+      .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+      .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 2px 8px rgba(16,35,61,.05);transition:transform .18s ease,box-shadow .18s ease}
+      .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+      .iconDisc{width:48px;height:48px;border-radius:50%;background:var(--copper-soft);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+      .iconDisc svg{width:26px;height:26px;stroke:var(--copper);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+      .status{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.03em;padding:4px 11px;border-radius:999px;margin-bottom:12px}
+      .statusDone{background:var(--teal-soft);color:var(--teal)}
+      .statusDev{background:var(--copper-soft);color:var(--copper)}
+      .statusSim{background:var(--surface2);color:var(--ink2);border:1px solid var(--line)}
+      .techline{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink2);margin-top:10px}
+
+      .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+      .tabbtn{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 18px;font-weight:600;cursor:pointer;font-family:inherit;font-size:.95rem}
+      .tabbtn[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+      .kpiRow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:16px 0}
+      .kpi{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--teal);border-radius:10px;padding:14px}
+      .kpi .n{font-family:"Spectral",serif;font-size:1.55rem;line-height:1.1}
+      .kpi .l{font-size:.82rem;color:var(--ink2);margin-top:4px}
+      table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+      th{background:var(--navy);color:#fff;text-align:left;padding:11px 14px;font-size:.9rem}
+      td{padding:10px 14px;border-top:1px solid var(--line);font-size:.95rem}
+      td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+      .barRow{display:grid;grid-template-columns:110px 1fr 64px;gap:12px;align-items:center;margin:10px 0}
+      .barTrack{background:var(--surface2);border-radius:6px;height:20px;overflow:hidden}
+      .barFill{height:100%;background:var(--teal);border-radius:6px}
+      .barVal{font-family:"IBM Plex Mono",monospace;font-size:.9rem;text-align:right}
+      pre{background:var(--navy2);color:#e8eef5;border-radius:12px;padding:18px;overflow-x:auto;font-size:.86rem;line-height:1.55}
+      pre code{font-family:"IBM Plex Mono",monospace;white-space:pre}
+      .codeLbl{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink2);margin:18px 0 8px}
+
+      .modelGrid{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;margin:18px 0}
+      .objBox{background:var(--surface);border:2px solid var(--teal);border-radius:12px;padding:18px}
+      .objBox h3{font-family:"IBM Plex Mono",monospace;font-size:1.05rem}
+      .objBox ul{margin:8px 0 0;padding-left:20px}
+      .linkArrow{display:flex;align-items:center;justify-content:center;font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink2);text-align:center}
+      .simBox{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:22px}
+      .field{margin-bottom:16px}
+      .field label{display:block;font-weight:600;margin-bottom:6px}
+      .field select,.field input{width:100%;max-width:340px;padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:1rem;font-family:inherit}
+      .resultBox{margin-top:16px;border-radius:10px;padding:16px 18px;display:none}
+      .resultBox.show{display:block}
+      .riskHigh{background:#f9e3e0;color:#7c2118}
+      .riskMedium{background:#f7ecd2;color:#6d5210}
+      .riskLow{background:var(--teal-soft);color:var(--teal)}
+      @media (prefers-color-scheme: dark){
+        .riskHigh{background:#472019;color:#f3b8ae}.riskMedium{background:#453713;color:#ecd28e}.riskLow{background:#123a35;color:#7fd4c5}
+      }
+      .riskWord{font-family:"Spectral",serif;font-size:1.5rem}
+
+      .flowRow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:20px 0}
+      .flowStep{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--copper);border-radius:10px;padding:10px 14px;font-weight:600;font-size:.92rem}
+      .flowArrow{color:var(--copper);font-weight:700}
+      .qList{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}
+      .qBtn{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;font-family:inherit;font-size:.98rem;color:var(--ink);font-weight:500}
+      .qBtn[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-soft)}
+      .qDetail{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:10px;padding:20px}
+
+      .pillRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+      .pill{background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:.88rem}
+      .pillLearn{background:var(--copper-soft);border-color:var(--copper);color:var(--copper);font-weight:600}
+      .certCard .seal{width:44px;height:44px;border-radius:50%;background:var(--copper);color:#fff;display:flex;align-items:center;justify-content:center;font-family:"Spectral",serif;font-size:1.2rem;margin-bottom:12px}
+      .slotNote{font-size:.88rem;color:var(--ink2);border-top:1px dashed var(--line);padding-top:10px;margin-top:12px}
+      .resumeBtn{display:block;text-align:center;width:100%}
+
+      footer{background:var(--navy2);color:#cfd9e5;padding:38px 0;margin-top:20px}
+      footer a{color:#e9c491}
+      footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:center;justify-content:space-between}
+
+      @media (max-width:860px){
+        .heroGrid{grid-template-columns:1fr}
+        .grid3,.grid2,.qList{grid-template-columns:1fr}
+        .kpiRow{grid-template-columns:repeat(2,1fr)}
+        .statBand{grid-template-columns:repeat(2,1fr)}
+        .statBand .stat{border-left:none;padding-left:0}
+        .modelGrid{grid-template-columns:1fr}
+        .linkArrow{padding:4px 0}
+        .hero{padding:36px 20px 0}
+        section{padding:40px 0}
+        .barRow{grid-template-columns:86px 1fr 56px}
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="mainnav" aria-label="Sections">
+      <div class="wrap">
+        <span class="brand">Tarini Akula</span>
+        <a href="#home">Home</a>
+        <a href="#k12">K 12 demo</a>
+        <a href="#caseassist">CaseAssist demo</a>
+        <a href="#healthcare">Healthcare explorer</a>
+        <a href="#resumes">Resumes and certifications</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
-  </div>
-</header>
 
-<main>
-
-<!-- Hero -->
-<div class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <p class="mono eyebrow">Salesforce · Agentforce · Data 360 · AI · Data Analytics · Business Analysis</p>
-      <h1>Salesforce developer and analyst who turns business problems into working solutions</h1>
-      <p class="lede">My work sits where systems, data, and business processes meet. I build and administer Salesforce solutions, analyze data with SQL and Power BI, and document requirements so that technical work answers a real business question. My current projects apply the same discipline to education data, healthcare operations, and AI assisted case triage, and my current learning focus is AI inside Salesforce, including Agentforce and Data 360.</p>
-      <div class="hero-ctas">
-        <a class="btn primary" href="#projects">Explore My Projects</a>
-        <a class="btn ghost" href="#contact">View My Resume</a>
-        <a class="btn ghost" href="#contact">Contact Me</a>
-      </div>
-      <div class="cred-strip">
-        <div><strong>Salesforce Certified Administrator</strong>Credential ADM 201</div>
-        <div><strong>Salesforce Platform Developer I</strong>Certified</div>
-        <div><strong>Copado Fundamentals I</strong>Certified</div>
-        <div><strong>Databricks Generative AI Fundamentals</strong>Certified</div>
-      </div>
-    </div>
-    <div class="photo-slot">
-      <img src="assets/tarini-akula.jpg" alt="Professional headshot of Tarini Akula" width="880" height="880">
-    </div>
-  </div>
-</div>
-
-<!-- Stat band -->
-<div class="wrap">
-  <div class="stat-band">
-    <div class="stat"><span class="num">2+</span><span class="cap">Years of Salesforce experience in the United States</span></div>
-    <div class="stat"><span class="num">4</span><span class="cap">Certifications across Salesforce, Copado, and Databricks</span></div>
-    <div class="stat"><span class="num">3</span><span class="cap">Projects documented end to end with evidence</span></div>
-    <div class="stat"><span class="num">15</span><span class="cap">Validation checks passing on the K 12 data project</span></div>
-  </div>
-</div>
-
-<!-- About -->
-<section id="about" class="band">
-  <div class="wrap">
-    <p class="mono eyebrow">About</p>
-    <h2>About Me</h2>
-    <div class="grid-2">
-      <div>
-        <p>I came to Salesforce through systems work and stayed because it rewards people who understand both the business process and the data underneath it. My experience covers Salesforce development and administration, business and systems analysis, and analytics work in SQL, Python, and Power BI.</p>
-        <p>I am now adding a careful study of AI in enterprise systems, including Agentforce and Data 360, and testing what those tools can honestly do inside a real workflow.</p>
-        <div class="more-text" id="about-more">
-          <p>I hold a Master of Science in Computer Science from Texas A&amp;M University Corpus Christi, completed in 2024, and I am based in Baltimore, Maryland. Across roles at Perficient, Intellibee, and Accenture, and earlier Salesforce roles in India with IBM and SportsPlus, I have worked in Sales Cloud, Service Cloud, Health Cloud, and Experience Cloud environments.</p>
-          <p>What I reach for first is evidence: the requirement, the data, the validation check. If a number or a feature cannot be traced back to those, it does not belong in a report or a release.</p>
-        </div>
-        <button class="toggle-btn" id="about-toggle" aria-expanded="false">Read more</button>
-      </div>
-      <div class="card">
-        <h3>Experience at a glance</h3>
-        <p><strong>Accenture</strong> · United States · April 2026 to Current</p>
-        <p><strong>Intellibee</strong> · United States · April 2025 to April 2026</p>
-        <p><strong>Perficient</strong> · United States · August 2024 to April 2025</p>
-        <p><strong>IBM</strong> · India · April 2021 to May 2022</p>
-        <p><strong>SportsPlus</strong> · India · July 2020 to April 2021</p>
-        <p><strong>Education</strong> · MS Computer Science, Texas A&amp;M University Corpus Christi, 2024</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- What I Do -->
-<section id="what-i-do">
-  <div class="wrap">
-    <p class="mono eyebrow">What I Do</p>
-    <h2>Three connected areas of work</h2>
-    <div class="grid-3">
-      <div class="card">
-        <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
-        <h3>Salesforce Development and Administration</h3>
-        <p>Apex, Lightning Web Components, Flow Builder, configuration, integrations, automation, and troubleshooting across Sales, Service, Health, and Experience Cloud.</p>
-        <p class="example">Example: in CaseAssist, a Salesforce project in development, I built the data model and core Apex services for claims intake and triage.</p>
-      </div>
-      <div class="card">
-        <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <h3>Data Analytics and Business Intelligence</h3>
-        <p>SQL analysis, data cleaning and validation, Power BI reporting, foundational DAX, Excel reporting with live formulas, KPI design, and visualization.</p>
-        <p class="example">Example: in the K 12 project, one documented population of 110 students carries through SQL queries, a Python notebook, an Excel workbook, and a Power BI model, and the headline numbers agree across all four.</p>
-      </div>
-      <div class="card">
-        <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <h3>Business and Systems Analysis</h3>
-        <p>Requirements gathering, process analysis, documentation, user stories, acceptance criteria, gap analysis, and UAT support, translating business needs into technical solutions.</p>
-        <p class="example">Example: in Healthcare Operations Analytics, I wrote the business problem, stakeholder analysis, requirements, and user stories, then kept a traceability matrix that links each requirement to the analysis that answers it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Projects -->
-<section id="projects" class="band">
-  <div class="wrap">
-    <p class="mono eyebrow">Featured Projects</p>
-    <h2>Projects</h2>
-    <p class="lede">Filter by area. Every card states the problem, my contribution, the technologies genuinely used, and an honest status.</p>
-    <div class="filters" role="group" aria-label="Project filters">
-      <button class="chip" data-filter="all" aria-pressed="true">All</button>
-      <button class="chip" data-filter="salesforce" aria-pressed="false">Salesforce</button>
-      <button class="chip" data-filter="data" aria-pressed="false">Data Analytics</button>
-      <button class="chip" data-filter="business" aria-pressed="false">Business Analysis</button>
-      <button class="chip" data-filter="ai" aria-pressed="false">AI</button>
-    </div>
-    <div class="grid-3" id="project-grid">
-
-      <article class="card project-card" data-areas="data business">
-        <span class="status progress">In progress</span>
-        <h3>K 12 Student Data Analytics</h3>
-        <div class="visual">
-          <p class="mono" style="margin-bottom:10px">Students at benchmark by subject, percent</p>
-          <div class="bars">
-            <div class="bar-row"><span>ELA</span><div class="bar-track"><div class="bar-fill" style="width:87.5%"></div></div><span>87.5</span></div>
-            <div class="bar-row"><span>Math</span><div class="bar-track"><div class="bar-fill" style="width:76.5%"></div></div><span>76.5</span></div>
-            <div class="bar-row"><span>Science</span><div class="bar-track"><div class="bar-fill copper" style="width:65.9%"></div></div><span>65.9</span></div>
+    <main id="main">
+      <section id="home" aria-label="Introduction" style="padding-top:36px">
+        <div class="wrap">
+          <div class="hero">
+            <div class="heroGrid">
+              <div>
+                <p class="mono" style="color:#e9c491;font-size:.85rem;letter-spacing:.1em">TARINI AKULA · BALTIMORE AND VIRGINIA</p>
+                <h1>Salesforce, data, and business analysis in one working portfolio</h1>
+                <p class="lede">I build and administer Salesforce solutions, analyze data with SQL and Python, and turn business questions into documented requirements and checked results. The projects below are real work with real files you can open and inspect.</p>
+                <div class="ctaRow">
+                  <a class="btn btnCopper" href="#projects">Explore my projects</a>
+                  <a class="btn btnGhost" href="#resumes">View my resumes</a>
+                  <a class="btn btnGhost" href="#contact">Contact me</a>
+                </div>
+              </div>
+              <div>
+                <div class="photoArea">
+                  <img src="assets/tarini-akula.jpg" alt="Professional headshot of Tarini Akula" width="880" height="880" />
+                </div>
+              </div>
+            </div>
+            <div class="statBand" aria-label="Verified numbers">
+              <div class="stat"><div class="statNum">2 plus</div><div class="statLbl">years of United States Salesforce experience</div></div>
+              <div class="stat"><div class="statNum">4</div><div class="statLbl">certifications, names verified against your resume</div></div>
+              <div class="stat"><div class="statNum">3</div><div class="statLbl">projects documented end to end</div></div>
+              <div class="stat"><div class="statNum">15 of 15</div><div class="statLbl">validation checks passing on the K 12 project</div></div>
+            </div>
           </div>
-          <p style="font-size:.82rem;color:var(--ink-soft);margin:10px 0 0">Real values from the project data. The dataset is simulated and holds no real student information.</p>
-        </div>
-        <p><strong>Problem.</strong> School summary tables described different groups of students in every table, so attendance and score averages quietly rested on different populations.</p>
-        <p><strong>My work.</strong> I rebuilt the extracts onto one documented population of 110 active students, with a cleaning pipeline, a validation suite, SQL analysis, a Python notebook, an Excel report, and a Power BI model that all reconcile.</p>
-        <p class="tech">SQL · Python · Power BI · DAX · Excel</p>
-        <div class="card-links">
-          <a href="projects/k12.html">Project page</a>
-          <a href="https://github.com/tariniakula01-pixel/k12-student-data-analytics">GitHub repository</a>
-        </div>
-      </article>
+          <div class="heroRule" aria-hidden="true"></div>
 
-      <article class="card project-card" data-areas="business data">
-        <span class="status case">Case study</span>
-        <h3>Healthcare Operations Analytics</h3>
-        <div class="visual">
-          <p class="mono" style="margin-bottom:10px">What the case study contains</p>
-          <p style="margin:0;font-size:.92rem;color:var(--ink-soft)">Business problem · Stakeholder analysis · Requirements · User stories · Requirements traceability matrix · SQL analysis · Dashboard material · Insights</p>
-        </div>
-        <p><strong>Problem.</strong> A healthcare operation needs to understand appointment outcomes: where no shows and cancellations concentrate, how lead time and wait time behave, and how workload spreads across providers.</p>
-        <p><strong>My work.</strong> I defined the business problem and requirements first, then built the SQL analysis and reporting material that answers eight documented business questions.</p>
-        <p class="tech">Business analysis · SQL · Power BI · KPI reporting</p>
-        <div class="card-links">
-          <a href="projects/healthcare.html">Project page</a>
-          <a href="https://github.com/tariniakula01-pixel/healthcare-operations-analytics">GitHub repository</a>
-        </div>
-      </article>
+          <div style="height:28px"></div>
+          <h3>What I do</h3>
+          <p class="muted" style="max-width:46em">Three connected areas, each grounded in a project on this page rather than a list of claims.</p>
+          <div class="grid3">
+            <article class="card">
+              <div class="iconDisc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 1 1 .6-8.96A5.5 5.5 0 0 1 18.3 11 3.6 3.6 0 0 1 17.5 18H7z"/></svg></div>
+              <h3>Salesforce development and administration</h3>
+              <p>Apex services, Lightning Web Components, Flow Builder, configuration, sharing and security, integrations, and troubleshooting across Sales Cloud, Service Cloud, Health Cloud, and Experience Cloud.</p>
+              <p class="small muted">Shown in practice by CaseAssist, where the data model and core Apex services are implemented and covered by test classes.</p>
+            </article>
+            <article class="card">
+              <div class="iconDisc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg></div>
+              <h3>Data analytics and business intelligence</h3>
+              <p>SQL queries, data cleaning and validation in Python, KPI definition, data modeling, DAX measures, and reporting in Power BI and Excel.</p>
+              <p class="small muted">Shown in practice by the K 12 project, where the same headline numbers are reproduced by Python, by DuckDB SQL, and by live Excel formulas.</p>
+            </article>
+            <article class="card">
+              <div class="iconDisc" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h5M10 16h5"/></svg></div>
+              <h3>Business and systems analysis</h3>
+              <p>Requirements gathering, stakeholder analysis, process documentation, user stories, acceptance criteria, and traceability from a business question to the deliverable that answers it.</p>
+              <p class="small muted">Shown in practice by Healthcare Operations Analytics, where every business question traces to a named file in the repository.</p>
+            </article>
+          </div>
 
-      <article class="card project-card" data-areas="salesforce ai">
-        <span class="status dev">In development</span>
-        <h3>CaseAssist</h3>
-        <div class="visual">
-          <p class="mono" style="margin-bottom:10px">Intake and triage workflow</p>
-          <div class="flow">
-            <div class="flow-step"><strong>Intake</strong><p>Claim details captured on Salesforce records</p></div>
-            <div class="flow-step"><strong>Triage</strong><p>Classification support for the handling team</p></div>
-            <div class="flow-step"><strong>Review</strong><p>A person approves before escalation</p></div>
+          <div style="height:28px"></div>
+          <h3 id="projects">Featured projects</h3>
+          <div class="grid3">
+            <article class="card">
+              <span class="status statusDone">Analysis complete</span>
+              <h3>K 12 Student Data Analytics</h3>
+              <p>Attendance, assessment, and benchmark analysis for a documented population of 110 Active students, with a cleaning and validation pipeline, a SQL suite, DAX measures, and an Excel report whose KPIs agree with each other.</p>
+              <p class="techline">Python · DuckDB SQL · Power BI project files · Excel</p>
+              <p style="margin-top:12px"><a href="#k12">Open the working demonstration</a></p>
+            </article>
+            <article class="card">
+              <span class="status statusDev">Core Apex implemented · Agent layer in development</span>
+              <h3>CaseAssist</h3>
+              <p>A Salesforce claims intake and triage build with a real data model, a claim creation service, a policy lookup service, and a rule based risk classifier written in Apex, each with its own test class.</p>
+              <p class="techline">Salesforce · Apex · Policy__c · Claim__c</p>
+              <p style="margin-top:12px"><a href="#caseassist">Try the classifier demonstration</a></p>
+            </article>
+            <article class="card">
+              <span class="status statusDone">Case study complete</span>
+              <h3>Healthcare Operations Analytics</h3>
+              <p>A business analysis case study that moves from a stated business problem through stakeholder analysis, requirements, and user stories to SQL analysis, a dashboard, and written insights, with a traceability matrix tying them together.</p>
+              <p class="techline">Requirements · User stories · SQL · Traceability matrix</p>
+              <p style="margin-top:12px"><a href="#healthcare">Explore the requirements</a></p>
+            </article>
+          </div>
+          <p class="small muted" style="margin-top:14px">Each card opens its full project section on this page, with repository links, technical explanations, and a status label, so a visitor can always tell what is finished, what is in development, and what is a simulation. The full project files live in the repositories: <a href="https://github.com/tariniakula01-pixel/k12-student-data-analytics">K 12 Student Data Analytics</a>, <a href="https://github.com/tariniakula01-pixel/caseassist-salesforce-ai">CaseAssist</a>, and <a href="https://github.com/tariniakula01-pixel/healthcare-operations-analytics">Healthcare Operations Analytics</a>.</p>
+        </div>
+      </section>
+
+      <section id="k12" aria-labelledby="k12-h" style="background:var(--surface2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+        <div class="wrap">
+          <p class="eyebrow">Project one · Working demonstration</p>
+          <h2 id="k12-h">K 12 Student Data Analytics, running on the real project numbers</h2>
+          <span class="status statusDev">Power BI embed not feasible today · Web demonstration built from actual processed data</span>
+          <p style="max-width:48em">The Power BI route was investigated first. The project files were authored as text and have never been opened in Power BI Desktop, and no report is published to a Power BI service, so there is no genuine report to embed and nothing here pretends otherwise. Instead, this demonstration runs in your browser on the project actual processed data. Every number below was computed from those files and cross checked against the documented findings. Switch the views and the figures, table, and bars all change.</p>
+
+          <div class="tabs" role="group" aria-label="K 12 data views">
+            <button type="button" class="tabbtn" data-view="all" aria-pressed="true">All students</button>
+            <button type="button" class="tabbtn" data-view="grade" aria-pressed="false">By grade</button>
+            <button type="button" class="tabbtn" data-view="program" aria-pressed="false">By program</button>
+            <button type="button" class="tabbtn" data-view="subject" aria-pressed="false">By subject</button>
+          </div>
+
+          <div class="kpiRow" id="kpiRow" aria-live="polite"></div>
+          <div id="k12TableWrap"></div>
+          <h3 style="margin-top:26px">Percent at benchmark</h3>
+          <div id="k12Bars" aria-live="polite"></div>
+          <p class="small muted" id="k12Note" style="margin-top:10px"></p>
+
+          <div class="grid2" style="margin-top:26px">
+            <div>
+              <p class="codeLbl">From sql/01_kpi_summary.sql in the project repository</p>
+              <pre><code>-- Builds views over the processed tables
+-- dim_student, fact_attendance, fact_assessment
+-- and returns one row of headline KPIs.
+--
+-- percent_met_benchmark follows the project rule:
+-- a score of 70 or above is recorded as Met.
+--
+-- chronic_absence_rate follows the project rule:
+-- an attendance rate below 90 percent.</code></pre>
+              <p class="small muted">The full query lives in the project repository, in the sql folder. The excerpt above states exactly what the real file does, including the two rules that define its headline measures.</p>
+            </div>
+            <div>
+              <p class="codeLbl">From powerbi/dax_measures.md in the project repository</p>
+              <pre><code>Total Students =
+    COUNTROWS ( dim_student )
+    -- returns 110 on the current data
+
+Students With Attendance =
+    COUNTROWS ( fact_attendance )
+    -- returns 108
+
+Students With Assessment =
+    COUNTROWS ( fact_assessment )
+    -- returns 107</code></pre>
+              <p class="small muted">Validation result: 15 of 15 checks pass, and the same KPIs are reproduced three ways, by the Python pipeline, by DuckDB SQL, and by live Excel formulas. That agreement is the evidence a technical reviewer looks for first.</p>
+            </div>
+          </div>
+          <p style="margin-top:22px"><a class="btn btnSoft" href="https://github.com/tariniakula01-pixel/k12-student-data-analytics">Open the K 12 repository on GitHub</a></p>
+        </div>
+      </section>
+
+      <section id="caseassist" aria-labelledby="ca-h">
+        <div class="wrap">
+          <p class="eyebrow">Project two · Guided demonstration</p>
+          <h2 id="ca-h">CaseAssist, the implemented Salesforce build</h2>
+          <span class="status statusDone">Data model and Apex services implemented</span>
+          <span class="status statusDev">Agentforce agent layer in development</span>
+          <span class="status statusSim">Intake shown here is a simulation</span>
+          <p style="max-width:48em">CaseAssist is a personal Salesforce project for claims intake and triage. What is implemented today is the data model and three Apex services, each with its own test class: ClaimCreationService, which creates a Claim__c record linked to a policy with its status defaulting to New; PolicyLookupService; and ClaimRiskClassifier, a rule based classifier written in Apex. The agent layer described in the repository README is still in progress, and this page says so wherever it appears.</p>
+
+          <h3>The data model, exactly as implemented</h3>
+          <div class="modelGrid">
+            <div class="objBox">
+              <h3>Policy__c</h3>
+              <ul>
+                <li><span class="mono">Status__c</span></li>
+              </ul>
+              <p class="small muted" style="margin-top:10px">The policy a claim belongs to. Its status drives the first rule of the classifier.</p>
+            </div>
+            <div class="linkArrow" aria-hidden="true">Claim__c holds a<br />lookup to Policy__c<br />→</div>
+            <div class="objBox">
+              <h3>Claim__c</h3>
+              <ul>
+                <li><span class="mono">Related_Policy__c</span>, lookup to Policy__c</li>
+                <li><span class="mono">Description__c</span></li>
+                <li><span class="mono">Incident_Date__c</span></li>
+                <li><span class="mono">Estimated_Amount__c</span></li>
+                <li><span class="mono">Claim_Status__c</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Run the classifier</h3>
+          <p style="max-width:48em">This is a web simulation of the implemented Apex logic. It runs the real rules of ClaimRiskClassifier, in the real order, and tells you which rule decided the result. It is not connected to a Salesforce org, and it is not an AI model. The Apex code itself notes that a future version would use an AI scoring model; that version does not exist yet.</p>
+          <div class="simBox">
+            <form id="classifierForm">
+              <div class="field">
+                <label for="policyStatus">Policy status, Status__c on the related Policy__c</label>
+                <select id="policyStatus" name="policyStatus">
+                  <option value="Active" selected>Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="estAmount">Estimated amount, Estimated_Amount__c</label>
+                <input id="estAmount" name="estAmount" type="number" min="0" step="any" placeholder="Leave blank to test the blank amount rule" />
+                <p class="small muted" style="margin-top:6px">Blank is a real test case. The classifier treats a missing amount as its own rule.</p>
+              </div>
+              <button type="submit" class="btn btnTeal">Run the classifier</button>
+            </form>
+            <div class="resultBox" id="classResult" role="status" aria-live="polite"></div>
+          </div>
+
+          <p class="codeLbl">The rules of ClaimRiskClassifier, in the order the Apex evaluates them</p>
+          <pre class="wrapcode"><code>1. Policy Status__c is not Active        -> High
+2. Estimated_Amount__c is blank          -> Medium
+3. Estimated_Amount__c is 10000 or more  -> High
+4. Estimated_Amount__c is 2000 or more   -> Medium
+5. Otherwise                             -> Low</code></pre>
+          <p class="small muted" style="max-width:48em">Try the boundary cases: an Inactive policy at any amount, an Active policy with a blank amount, 10000 exactly, 2000 exactly, and 500. Each one lands on a different rule, which is the fastest way to see that the simulation follows the Apex and not a guess.</p>
+          <p style="margin-top:22px"><a class="btn btnSoft" href="https://github.com/tariniakula01-pixel/caseassist-salesforce-ai">Open the CaseAssist repository on GitHub</a></p>
+        </div>
+      </section>
+
+      <section id="healthcare" aria-labelledby="hc-h" style="background:var(--surface2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+        <div class="wrap">
+          <p class="eyebrow">Project three · Interactive case study</p>
+          <h2 id="hc-h">Healthcare Operations Analytics, requirements you can walk through</h2>
+          <span class="status statusDone">Case study complete</span>
+          <p style="max-width:48em">The project follows a business analysis path from problem to insight, and every stage is a real file in the repository. Select any of the eight business questions and the explorer shows which deliverable answers it, with a direct link to that deliverable in the repository.</p>
+
+          <div class="flowRow" aria-label="Project process flow">
+            <span class="flowStep">Business problem</span><span class="flowArrow" aria-hidden="true">→</span>
+            <span class="flowStep">Stakeholder analysis</span><span class="flowArrow" aria-hidden="true">→</span>
+            <span class="flowStep">Requirements</span><span class="flowArrow" aria-hidden="true">→</span>
+            <span class="flowStep">User stories</span><span class="flowArrow" aria-hidden="true">→</span>
+            <span class="flowStep">SQL analysis</span><span class="flowArrow" aria-hidden="true">→</span>
+            <span class="flowStep">Dashboard</span><span class="flowArrow" aria-hidden="true">→</span>
+            <span class="flowStep">Insights</span>
+          </div>
+
+          <div class="qList" id="qList" role="group" aria-label="Eight business questions"></div>
+          <div class="qDetail" id="qDetail" aria-live="polite"></div>
+          <p class="small muted" style="margin-top:14px">Repository folders verified for this project: business-analysis, sql, dashboard, insights, and data. The requirements traceability matrix sits inside business-analysis and ties each requirement to the analysis and deliverable that answer it.</p>
+          <p style="margin-top:22px"><a class="btn btnSoft" href="https://github.com/tariniakula01-pixel/healthcare-operations-analytics">Open the Healthcare repository on GitHub</a></p>
+        </div>
+      </section>
+
+      <section id="resumes" aria-labelledby="res-h">
+        <div class="wrap">
+          <p class="eyebrow">Resumes and certifications</p>
+          <h2 id="res-h">Three resume versions, four verified certifications</h2>
+          <div class="grid2">
+            <div class="card">
+              <h3>Resume downloads</h3>
+              <p>All three versions are kept in my Drive folder named Job Application Resumes. Each button below is a direct PDF download of the current version.</p>
+              <div class="pillRow" style="flex-direction:column;align-items:stretch;gap:10px">
+                <a class="btn btnSoft resumeBtn" href="assets/resumes/Tarini_Akula_Salesforce_Resume.pdf">Salesforce Administrator and Developer · PDF</a>
+                <a class="btn btnSoft resumeBtn" href="assets/resumes/Tarini_Akula_Business_Analyst_Resume.pdf">Business IT and Systems Analyst · PDF</a>
+                <a class="btn btnSoft resumeBtn" href="assets/resumes/Tarini_Akula_Data_Analyst_Resume.pdf">Junior Data Analyst · PDF</a>
+              </div>
+            </div>
+            <div>
+              <div class="grid2" style="gap:14px">
+                <article class="card certCard">
+                  <div class="seal" aria-hidden="true">✓</div>
+                  <h3 style="font-size:1.05rem">Salesforce Certified Administrator</h3>
+                  <p class="slotNote">Verification link added when you share your Trailhead credential link. No link, ID, or date is invented here.</p>
+                </article>
+                <article class="card certCard">
+                  <div class="seal" aria-hidden="true">✓</div>
+                  <h3 style="font-size:1.05rem">Salesforce Platform Developer I</h3>
+                  <p class="slotNote">Verification link added when you share your Trailhead credential link. No link, ID, or date is invented here.</p>
+                </article>
+                <article class="card certCard">
+                  <div class="seal" aria-hidden="true">✓</div>
+                  <h3 style="font-size:1.05rem">Copado Fundamentals I</h3>
+                  <p class="slotNote">Verification link slot held open for your credential link, added as soon as you supply it.</p>
+                </article>
+                <article class="card certCard">
+                  <div class="seal" aria-hidden="true">✓</div>
+                  <h3 style="font-size:1.05rem">Databricks Generative AI Fundamentals</h3>
+                  <p class="slotNote">Verification link added when you share your Databricks credential link. No link, ID, or date is invented here.</p>
+                </article>
+              </div>
+              <p class="small muted" style="margin-top:12px">Certification names are verified against your resume. That is the source used here, and it is the only source used here.</p>
+            </div>
+          </div>
+
+          <div style="height:30px"></div>
+          <h3>Skills, grouped by the work they support</h3>
+          <div class="grid3">
+            <div class="card"><h3 style="font-size:1.05rem">Salesforce and CRM</h3><div class="pillRow"><span class="pill">Apex</span><span class="pill">Lightning Web Components</span><span class="pill">Flow Builder</span><span class="pill">SOQL</span><span class="pill">Sharing and security</span><span class="pill">Copado</span></div></div>
+            <div class="card"><h3 style="font-size:1.05rem">Data and reporting</h3><div class="pillRow"><span class="pill">SQL</span><span class="pill">Python</span><span class="pill">Power BI</span><span class="pill">DAX</span><span class="pill">Excel</span><span class="pill">Data validation</span></div></div>
+            <div class="card"><h3 style="font-size:1.05rem">Analysis and delivery</h3><div class="pillRow"><span class="pill">Requirements</span><span class="pill">User stories</span><span class="pill">Traceability</span><span class="pill">UAT</span><span class="pill">Git</span><span class="pill">Azure DevOps</span><span class="pill">Agile</span><span class="pill pillLearn">Agentforce, currently learning</span><span class="pill pillLearn">Data 360, currently learning</span></div></div>
           </div>
         </div>
-        <p><strong>Problem.</strong> Financial services claims arrive unstructured, and manual triage is slow and inconsistent.</p>
-        <p><strong>My work.</strong> I designed the Salesforce data model and built the core Apex services. The Agentforce agent layer is in progress, and the project is a personal build, not a client deployment.</p>
-        <p class="tech">Salesforce · Apex · Agentforce (in progress) · Data 360 (exploring)</p>
-        <div class="card-links">
-          <a href="projects/caseassist.html">Project page</a>
-          <a href="https://github.com/tariniakula01-pixel/caseassist-salesforce-ai">GitHub repository</a>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-h" style="padding-top:0">
+        <div class="wrap">
+          <div class="card" style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between">
+            <div style="max-width:36em">
+              <h2 id="contact-h" style="font-size:1.5rem">Contact</h2>
+              <p style="margin:0">Recruiters reach the code from the same page as the story. This page links my GitHub profile at <a href="https://github.com/tariniakula01-pixel">github.com/tariniakula01-pixel</a>, my LinkedIn profile, and my email, each verified before it ships.</p>
+            </div>
+            <div class="ctaRow" style="margin:0">
+              <a class="btn btnCopper" href="mailto:akulatarini@gmail.com">Email me</a>
+              <a class="btn btnSoft" href="https://www.linkedin.com/in/tarini-ak">LinkedIn</a>
+              <a class="btn btnSoft" href="https://github.com/tariniakula01-pixel">GitHub</a>
+            </div>
+          </div>
         </div>
-      </article>
+      </section>
+    </main>
 
-    </div>
-  </div>
-</section>
-
-<!-- Salesforce and AI -->
-<section id="salesforce-ai">
-  <div class="wrap">
-    <p class="mono eyebrow">Salesforce and AI</p>
-    <h2>Exploring AI inside Salesforce, honestly labeled</h2>
-    <p class="lede">CaseAssist is where I test AI assisted triage against a real data model and real code. The diagram separates what works today from what is still being built and what is still an idea.</p>
-    <div class="flow" style="margin-top:26px">
-      <div class="flow-step"><strong>Salesforce case data</strong><p>Claims and service cases on standard and custom objects</p><p><span class="dot work"></span>Working in the project</p></div>
-      <div class="flow-step"><strong>Data model and Apex services</strong><p>Intake structure and core services are complete</p><p><span class="dot work"></span>Working in the project</p></div>
-      <div class="flow-step"><strong>Agentforce triage support</strong><p>Agent layer that classifies and drafts next steps</p><p><span class="dot prog"></span>In development</p></div>
-      <div class="flow-step"><strong>Human approved escalation</strong><p>A person reviews and approves before any escalation</p><p><span class="dot plan"></span>Design concept</p></div>
-    </div>
-    <div class="legend">
-      <span><span class="dot work"></span>Working: implemented in the repository</span>
-      <span><span class="dot prog"></span>In development: partially built, still changing</span>
-      <span><span class="dot plan"></span>Concept: designed, not yet built</span>
-    </div>
-    <p style="margin-top:22px">Agentforce and Data 360 also appear in my skills as currently learning. Nothing on this page describes AI deployed for a paying client. <a href="projects/caseassist.html">Walk through the CaseAssist project</a></p>
-  </div>
-</section>
-
-<!-- Skills -->
-<section id="skills" class="band">
-  <div class="wrap">
-    <p class="mono eyebrow">Technical Skills</p>
-    <h2>Skills, grouped by how they are used</h2>
-    <div class="skills-grid">
-      <div class="card"><h3>Salesforce and CRM</h3><div class="pills">
-        <span>Administration and configuration</span><span>Apex</span><span>Lightning Web Components</span><span>Flow Builder</span><span>SOQL</span><span>Sales, Service, Health, and Experience Cloud</span><span>NPSP</span><span>Validation rules, permission sets, sharing</span><span>Data migration</span><span>Copado</span>
-      </div></div>
-      <div class="card"><h3>Programming and Web Development</h3><div class="pills">
-        <span>SQL</span><span>Python</span><span>JavaScript</span><span>HTML and CSS</span><span>Java</span><span>REST APIs</span>
-      </div></div>
-      <div class="card"><h3>Data Analytics and Business Intelligence</h3><div class="pills">
-        <span>SQL analysis</span><span>Data cleaning and validation</span><span>Power BI</span><span>DAX at a foundational level</span><span>Excel reporting with live formulas</span><span>KPI design</span><span>Data dictionaries</span><span>Dashboard design</span>
-      </div></div>
-      <div class="card"><h3>Business and Systems Analysis</h3><div class="pills">
-        <span>Requirements gathering</span><span>BRD and FRD documents</span><span>User stories and acceptance criteria</span><span>Gap analysis</span><span>UAT support</span><span>Process documentation</span><span>Requirements traceability</span>
-      </div></div>
-      <div class="card"><h3>AI and Emerging Technologies</h3><div class="pills">
-        <span>Generative AI fundamentals, Databricks credential</span>
-        <span class="learning">Currently learning: Agentforce</span>
-        <span class="learning">Currently learning: Data 360</span>
-        <span class="learning">Currently learning: prompt design</span>
-        <span class="learning">Currently learning: AI assisted workflows</span>
-      </div></div>
-      <div class="card"><h3>Development Tools and Methodologies</h3><div class="pills">
-        <span>Git and GitHub</span><span>Azure DevOps</span><span>SFDX</span><span>Copado CI and CD</span><span>Agile and Scrum</span>
-      </div></div>
-    </div>
-  </div>
-</section>
-
-<!-- Certifications -->
-<section id="certifications">
-  <div class="wrap">
-    <p class="mono eyebrow">Certifications and Learning</p>
-    <h2>Certifications</h2>
-    <div class="grid-2">
-      <div class="card"><div class="medallion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div><h3>Salesforce Certified Administrator</h3><p>Credential ADM 201.</p></div>
-      <div class="card"><div class="medallion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div><h3>Salesforce Platform Developer I</h3><p>Certified.</p></div>
-      <div class="card"><div class="medallion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div><h3>Copado Fundamentals I</h3><p>Certified.</p></div>
-      <div class="card"><div class="medallion"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5 12.5 10 17.5 19 7.5"/></svg></div><h3>Databricks Generative AI Fundamentals</h3><p>Course and certification completed. A verification link will be added here when available.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Approach -->
-<section id="approach" class="band">
-  <div class="wrap">
-    <p class="mono eyebrow">How I Approach Problems</p>
-    <h2>From problem to documented result</h2>
-    <div class="steps">
-      <div class="step"><span class="num">1</span><strong>Understand the problem</strong><p>In the healthcare case study, the work starts with a written business problem and the stakeholders it affects.</p></div>
-      <div class="step"><span class="num">2</span><strong>Examine requirements and data</strong><p>In the K 12 project, profiling the source tables came before any analysis, and it changed the population the whole project rests on.</p></div>
-      <div class="step"><span class="num">3</span><strong>Design before building</strong><p>CaseAssist began with a data model, so the Apex services and the agent layer have a stable structure to build on.</p></div>
-      <div class="step"><span class="num">4</span><strong>Build and validate</strong><p>Fifteen validation checks run on the K 12 processed tables, and every headline number is reconciled across tools before it is quoted.</p></div>
-      <div class="step"><span class="num">5</span><strong>Document the outcome</strong><p>Each project keeps its questions, decisions, and limitations in writing, so a reviewer can retrace the work without asking me.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Contact -->
-<section id="contact">
-  <div class="wrap">
-    <p class="mono eyebrow">Contact</p>
-    <h2>Contact Me</h2>
-    <div class="contact-grid">
-      <div class="contact-list">
-        <div class="contact-item"><strong>Email</strong><a href="mailto:akulatarini@gmail.com">akulatarini@gmail.com</a></div>
-        <div class="contact-item"><strong>LinkedIn</strong><a href="https://www.linkedin.com/in/tarini-ak">linkedin.com/in/tarini-ak</a></div>
-        <div class="contact-item"><strong>GitHub</strong><a href="https://github.com/tariniakula01-pixel">github.com/tariniakula01-pixel</a></div>
+    <footer>
+      <div class="wrap">
+        <span><strong style="color:#fff">Tarini Akula</strong> · Baltimore, Maryland</span>
+        <span><a href="https://github.com/tariniakula01-pixel">GitHub</a> · <a href="https://www.linkedin.com/in/tarini-ak">LinkedIn</a> · <a href="mailto:akulatarini@gmail.com">akulatarini@gmail.com</a></span>
       </div>
-      <div class="card">
-        <h3>Resume downloads</h3>
-        <p>Three versions, matched to the roles I apply for. Each opens as a PDF.</p>
-        <div class="resume-dl">
-          <a href="assets/resumes/Tarini_Akula_Salesforce_Resume.pdf">Salesforce Administrator and Developer <span>PDF</span></a>
-          <a href="assets/resumes/Tarini_Akula_Business_Analyst_Resume.pdf">Business, IT, and Systems Analyst <span>PDF</span></a>
-          <a href="assets/resumes/Tarini_Akula_Data_Analyst_Resume.pdf">Junior Data Analyst <span>PDF</span></a>
-        </div>
-        <p style="margin-top:14px">Prefer email? <a href="mailto:akulatarini@gmail.com?subject=Resume%20request">Request a copy by email</a></p>
-      </div>
-    </div>
-  </div>
-</section>
+    </footer>
 
-</main>
+    <script>
+      (function () {
+        "use strict";
 
-<footer>
-  <div class="wrap">
-    <span>Tarini Akula · Baltimore, Maryland</span>
-    <span><a href="#projects">Projects</a> · <a href="#contact">Contact</a> · <a href="https://github.com/tariniakula01-pixel">GitHub</a></span>
-  </div>
-</footer>
+        /* K 12 demonstration data, computed from the project processed data */
+        var K12 = {
+          all: {
+            kpis: [
+              { n: "110", l: "Students in the population, all Active" },
+              { n: "91.84", l: "Average attendance, percent" },
+              { n: "78.48", l: "Average score" },
+              { n: "75.7", l: "Percent at benchmark" },
+              { n: "33.3", l: "Chronic absence, percent" }
+            ],
+            head: ["Group", "Students", "Average attendance", "Average score", "Percent at benchmark", "Chronic absence percent"],
+            rows: [["All students", 110, 91.84, 78.48, 75.7, 33.3]],
+            bars: [["All students", 75.7]],
+            note: "Chronic absence uses the project definition, an attendance rate below 90 percent, and counts 36 of the 108 students who have attendance records."
+          },
+          grade: {
+            kpis: [
+              { n: "4", l: "Grade groups" },
+              { n: "Grade 8", l: "Largest group, 40 students" },
+              { n: "80.52", l: "Highest average score, Grade 5" },
+              { n: "81.8", l: "Highest percent at benchmark, Grade 7" },
+              { n: "19.0", l: "Lowest chronic absence, Grade 7, percent" }
+            ],
+            head: ["Grade", "Students", "Average attendance", "Average score", "Percent at benchmark", "Chronic absence percent"],
+            rows: [
+              ["Grade 5", 25, 91.36, 80.52, 76.0, 36.0],
+              ["Grade 6", 22, 91.85, 76.5, 63.6, 36.4],
+              ["Grade 7", 23, 93.25, 77.05, 81.8, 19.0],
+              ["Grade 8", 40, 91.38, 79.11, 78.9, 37.5]
+            ],
+            bars: [["Grade 5", 76.0], ["Grade 6", 63.6], ["Grade 7", 81.8], ["Grade 8", 78.9]],
+            note: "Grade 7 pairs the highest attendance with the lowest chronic absence. Grade 6 has the lowest average score and the lowest percent at benchmark."
+          },
+          program: {
+            kpis: [
+              { n: "4", l: "Program groups" },
+              { n: "Core", l: "Largest group, 55 students" },
+              { n: "83.67", l: "Highest average score, MTSS Tier 3" },
+              { n: "88.2", l: "Highest percent at benchmark, MTSS Tier 2" },
+              { n: "20.0", l: "Lowest chronic absence, Core, percent" }
+            ],
+            head: ["Program", "Students", "Average attendance", "Average score", "Percent at benchmark", "Chronic absence percent"],
+            rows: [
+              ["Core", 55, 93.14, 78.96, 79.2, 20.0],
+              ["MTSS Tier 1", 28, 90.08, 74.93, 60.7, 50.0],
+              ["MTSS Tier 2", 18, 90.72, 80.06, 88.2, 44.4],
+              ["MTSS Tier 3", 9, 91.16, 83.67, 77.8, 44.4]
+            ],
+            bars: [["Core", 79.2], ["MTSS Tier 1", 60.7], ["MTSS Tier 2", 88.2], ["MTSS Tier 3", 77.8]],
+            note: "Core students attend most and are chronically absent least. MTSS Tier 1 has the lowest average score and the highest chronic absence at 50.0 percent."
+          },
+          subject: {
+            kpis: [
+              { n: "3", l: "Subjects assessed" },
+              { n: "107", l: "Students with an assessment" },
+              { n: "87.5", l: "Highest percent at benchmark, ELA" },
+              { n: "65.9", l: "Lowest percent at benchmark, Science" }
+            ],
+            head: ["Subject", "Percent at benchmark"],
+            rows: [["ELA", 87.5], ["Math", 76.5], ["Science", 65.9]],
+            bars: [["ELA", 87.5], ["Math", 76.5], ["Science", 65.9]],
+            note: "Each student took one subject, so these bars compare different groups of students rather than the same students across subjects."
+          }
+        };
 
-<script src="assets/script.js"></script>
-</body>
+        var kpiRow = document.getElementById("kpiRow");
+        var tableWrap = document.getElementById("k12TableWrap");
+        var barsEl = document.getElementById("k12Bars");
+        var noteEl = document.getElementById("k12Note");
+        var tabBtns = Array.prototype.slice.call(document.querySelectorAll(".tabbtn"));
+
+        function fmt(v) {
+          return typeof v === "number" ? (Math.round(v * 100) / 100).toString() : v;
+        }
+        function renderK12(key) {
+          var view = K12[key];
+          kpiRow.innerHTML = view.kpis.map(function (k) {
+            return '<div class="kpi"><div class="n">' + k.n + '</div><div class="l">' + k.l + "</div></div>";
+          }).join("");
+          var html = "<table><thead><tr>" + view.head.map(function (h, i) {
+            return '<th scope="col"' + (i > 0 ? ' class="num"' : "") + ">" + h + "</th>";
+          }).join("") + "</tr></thead><tbody>";
+          view.rows.forEach(function (r) {
+            html += "<tr>" + r.map(function (c, i) {
+              return i === 0 ? '<th scope="row" style="background:var(--surface);color:var(--ink);font-weight:600">' + c + "</th>" : '<td class="num">' + fmt(c) + "</td>";
+            }).join("") + "</tr>";
+          });
+          html += "</tbody></table>";
+          tableWrap.innerHTML = html;
+          barsEl.innerHTML = view.bars.map(function (b) {
+            return '<div class="barRow"><span>' + b[0] + '</span><div class="barTrack"><div class="barFill" style="width:' + b[1] + '%"></div></div><span class="barVal">' + fmt(b[1]) + "%</span></div>";
+          }).join("");
+          noteEl.textContent = view.note;
+        }
+        tabBtns.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            tabBtns.forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+            btn.setAttribute("aria-pressed", "true");
+            renderK12(btn.getAttribute("data-view"));
+          });
+        });
+        renderK12("all");
+
+        /* CaseAssist classifier, the implemented Apex rules in order */
+        var form = document.getElementById("classifierForm");
+        var result = document.getElementById("classResult");
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var status = document.getElementById("policyStatus").value;
+          var raw = document.getElementById("estAmount").value.trim();
+          var amount = raw === "" ? null : parseFloat(raw);
+          var risk, rule;
+          if (status !== "Active") {
+            risk = "High";
+            rule = "Rule 1 fired. The related policy status is not Active, so the Apex returns High before any amount is considered.";
+          } else if (amount === null || isNaN(amount)) {
+            risk = "Medium";
+            rule = "Rule 2 fired. The policy is Active and the estimated amount is blank, so the Apex returns Medium.";
+          } else if (amount >= 10000) {
+            risk = "High";
+            rule = "Rule 3 fired. The policy is Active and the estimated amount is 10000 or more, so the Apex returns High.";
+          } else if (amount >= 2000) {
+            risk = "Medium";
+            rule = "Rule 4 fired. The policy is Active and the estimated amount is 2000 or more, so the Apex returns Medium.";
+          } else {
+            risk = "Low";
+            rule = "Rule 5 fired. The policy is Active and the estimated amount is below 2000, so the Apex returns Low.";
+          }
+          result.className = "resultBox show risk" + risk;
+          result.innerHTML = '<div class="riskWord">Risk level: ' + risk + "</div><p style=\"margin:6px 0 0\">" + rule + '</p><p class="small" style="margin:6px 0 0">Simulation of the implemented Apex logic, running in your browser. Not connected to a Salesforce org.</p>';
+        });
+
+        /* Healthcare requirements explorer */
+        var REPO = "https://github.com/tariniakula01-pixel/healthcare-operations-analytics";
+        var QUESTIONS = [
+          { q: "What business problem does this project set out to solve", d: "Business problem statement", p: "business-analysis/business-problem.md", t: "The case study opens with a written statement of the operational problem, written before any analysis begins, so every later deliverable can be judged against it." },
+          { q: "Who are the stakeholders and what does each one need", d: "Stakeholder analysis", p: "business-analysis/stakeholder-analysis.md", t: "Stakeholders are identified with their interests and information needs, which is what shapes the requirements that follow." },
+          { q: "What requirements follow from the problem and the stakeholders", d: "Requirements document", p: "business-analysis/requirements.md", t: "The requirements document records what the analysis and its deliverables must cover, in a form that can be checked one item at a time." },
+          { q: "How are the requirements expressed for the people who use the work", d: "User stories", p: "business-analysis/user-stories.md", t: "Requirements are rewritten as user stories, so each need is stated from the point of view of the person it serves, with the outcome they expect." },
+          { q: "How does each requirement trace through to its answer", d: "Requirements traceability matrix", p: "business-analysis/requirements-traceability-matrix.csv", t: "The matrix links every requirement to the analysis and deliverable that answer it. It is the control that shows nothing was dropped and nothing was added without a reason." },
+          { q: "What does the SQL analysis query and measure", d: "SQL analysis", p: "sql/healthcare_analysis.sql", t: "The SQL file holds the queries that work the project data and produce the figures the dashboard and insights rest on." },
+          { q: "What does the dashboard present to its audience", d: "Dashboard deliverable", p: "dashboard", t: "The dashboard folder holds the reporting deliverable built from the SQL analysis, presenting the measures the requirements asked for." },
+          { q: "What insights and recommendations does the work support", d: "Insights", p: "insights", t: "The insights folder records what the analysis found and what it supports doing next, kept separate from the figures so findings and evidence stay distinct." }
+        ];
+        var qList = document.getElementById("qList");
+        var qDetail = document.getElementById("qDetail");
+        function showQuestion(i, btns) {
+          btns.forEach(function (b, j) { b.setAttribute("aria-pressed", j === i ? "true" : "false"); });
+          var item = QUESTIONS[i];
+          var isFile = item.p.indexOf(".") !== -1;
+          var href = REPO + (isFile ? "/blob/main/" : "/tree/main/") + item.p;
+          qDetail.innerHTML = "<h3 style=\"margin-bottom:6px\">" + item.q + "</h3>" +
+            "<p style=\"margin-bottom:6px\"><strong>Answered by:</strong> " + item.d + "</p>" +
+            "<p class=\"mono\" style=\"font-size:.85rem;margin-bottom:8px\">Repository path: <a href=\"" + href + "\">" + item.p + "</a></p>" +
+            "<p style=\"margin:0\">" + item.t + "</p>";
+        }
+        var qBtns = QUESTIONS.map(function (item, i) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "qBtn";
+          b.setAttribute("aria-pressed", "false");
+          b.textContent = "Question " + (i + 1) + ". " + item.q;
+          b.addEventListener("click", function () { showQuestion(i, qBtns); });
+          qList.appendChild(b);
+          return b;
+        });
+        showQuestion(0, qBtns);
+      })();
+    </script>
+  </body>
 </html>
